@@ -1,0 +1,21 @@
+import numpy as np
+
+array = np.array([40, 50, 30, 70, 80])
+number = 70
+is_Present = False
+
+for element in array:
+    if element == number:
+        is_Present = True
+        break
+
+if is_Present:
+    print(f" {number} present in Array? {is_Present}")
+else:
+    print(f" {number} present in Array? {is_Present}")
+
+
+
+
+
+

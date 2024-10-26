@@ -1,0 +1,90 @@
+import random
+
+
+class GoalBasedAgent:
+
+
+    def __init__(self, initial_state, goal_state):
+        self.state = initial_state
+        self.goal_state = goal_state
+
+    def act(self):
+
+        if self.state < self.goal_state:
+            self.state += 1
+            print(f"[Goal-Based Agent] Moved to state {self.state} to reach goal {self.goal_state}.")
+        elif self.state > self.goal_state:
+            self.state -= 1
+            print(f"[Goal-Based Agent] Moved to state {self.state} to reach goal {self.goal_state}.")
+        else:
+            print("[Goal-Based Agent] Goal achieved!")
+
+
+class ModelBasedAgent:
+
+
+    def __init__(self, initial_state):
+        self.state = initial_state
+        self.model = {}
+
+    def update_model(self, action):
+
+        self.model[self.state] = action
+
+    def act(self):
+
+        action = "Increase" if self.state < 10 else "Stop"
+        if action == "Increase":
+            self.state += 1
+        self.update_model(action)
+        print(f"[Model-Based Agent] State: {self.state}, Action: {action}, Model: {self.model}")
+
+
+class UtilityBasedAgent:
+
+
+    def __init__(self, initial_state):
+        self.state = initial_state
+
+    def utility_function(self):
+
+        return -abs(10 - self.state)
+
+    def act(self):
+
+        if self.state < 10:
+            self.state += 1
+        elif self.state > 10:
+            self.state -= 1
+        print(f"[Utility-Based Agent] Current State: {self.state}, Utility: {self.utility_function()}")
+
+
+def goal_based_scenario():
+    print("----- Goal-Based Agent Scenario -----")
+    goal_agent = GoalBasedAgent(initial_state=0, goal_state=5)
+    while goal_agent.state != goal_agent.goal_state:
+        goal_agent.act()
+
+
+def model_based_scenario():
+    print("\n----- Model-Based Agent Scenario -----")
+    model_agent = ModelBasedAgent(initial_state=random.randint(0, 10))
+    for _ in range(12):
+        model_agent.act()
+
+
+def utility_based_scenario():
+    print("\n----- Utility-Based Agent Scenario -----")
+    utility_agent = UtilityBasedAgent(initial_state=0)
+    for _ in range(12):
+        utility_agent.act()
+
+
+
+def main():
+    goal_based_scenario()
+    model_based_scenario()
+    utility_based_scenario()
+
+if __name__ == "__main__":
+    main()

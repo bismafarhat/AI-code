@@ -1,0 +1,51 @@
+import random
+
+class Environment:
+    def __init__(self):
+
+        self.locationCondition = {
+            'A': random.randint(2, 4),
+            'B': random.randint(0, 1),
+            'C': random.randint(0, 1),
+            'D': random.randint(0, 1)
+        }
+
+class SimpleReflexVacuumAgent:
+    def __init__(self, environment):
+        self.environment = environment
+        self.score = 0
+
+        self.vacuumLocation = random.choice(['A', 'B', 'C', 'D'])
+
+        print("Initial environment conditions:", self.environment.locationCondition)
+
+
+        print(f"Vacuum is randomly placed at Location {self.vacuumLocation}.")
+        self.clean_location(self.vacuumLocation)
+
+
+        locations = ['A', 'B', 'C', 'D']
+        for location in locations:
+            if location != self.vacuumLocation:
+                self.move_and_clean(location)
+
+
+        print("Final environment conditions:", self.environment.locationCondition)
+        print("Performance Measurement: " + str(self.score))
+
+    def clean_location(self, location):
+        print(f"Location {location} is {'Dirty' if self.environment.locationCondition[location] == 1 else 'Clean'}.")
+        if self.environment.locationCondition[location] == 1:
+            self.environment.locationCondition[location] = 0
+            self.score += 1
+            print(f"Location {location} has been Cleaned.")
+        else:
+            print(f"Location {location} is already Clean.")
+
+    def move_and_clean(self, location):
+        print(f"Moving to Location {location}...")
+        self.clean_location(location)
+
+
+Environment = Environment()
+theVacuum = SimpleReflexVacuumAgent(Environment)
